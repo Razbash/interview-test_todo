@@ -33,6 +33,8 @@ export const categoriesSlice = createSlice({
   name: "categories",
   initialState,
   reducers: {
+    // Некорректные названия функций. см tasksSlice
+    // Отсутствуют типизации action PayloadAction
     categoriesAdded: (state, action) => {
       state.push({
         id: uuidv4(),

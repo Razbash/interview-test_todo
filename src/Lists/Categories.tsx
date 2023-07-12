@@ -11,6 +11,7 @@ export const Categories = () => {
   return (
     <ul>
       {categories.map((category) => (
+        // Тут таже проблема что и в Lists/Tasks.tsx
         <ListItem key={category.id} item={category} />
       ))}
     </ul>

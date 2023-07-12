@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 /* APPLICATION */
+// Не самый удобный способ иморта. Тут импортируется 6 компонентов одной сущности модального окна. В папке Modal можно создать файл index.ts, туда импортировать все компоненты модального окна и экспортировать единой сущностью сюда
 import { Modal } from "./Modal";
 import { ModalHeader } from "./ModalHeader";
 import { ModalInput } from "./ModalInput";
@@ -22,7 +23,9 @@ export const ModalCreateItem: React.FC<ModalCreateItemProps> = ({
   active,
   setActive,
 }) => {
+  // Тут нужно использовать useAppDispatch
   const dispatch = useDispatch(),
+  // Плохая практика брать тут роут и в зависимости от него делать условный рендеринг. Лучше получить в пропсах сразу информацию о том какие данные мы выводим.
     { pathname } = useLocation(),
     isCategories = pathname.includes("categories"),
     [name, setName] = useState(""),
@@ -61,6 +64,7 @@ export const ModalCreateItem: React.FC<ModalCreateItemProps> = ({
         clearState={clearState}
         submitBtnText="Создать"
         size="large"
+        // Это лучше вынести в функцию. Хорошая практика разделять верстку от функций.
         onSubmit={
           name
             ? () => {
@@ -70,6 +74,7 @@ export const ModalCreateItem: React.FC<ModalCreateItemProps> = ({
                     : tasksAdded({
                         name,
                         description,
+                        // Баг: категория ожидает строку, а получает функцию. Из-за этого выходит ошибка. Следует также добавить типизацию, чтобы такого не происходило
                         category: setSelected,
                       })
                 );

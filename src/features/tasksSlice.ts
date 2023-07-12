@@ -1,10 +1,13 @@
 /* VENDOR */
+// PayloadAction импортируется, но не используется
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
 /* APPLICATION */
 import { RootState } from "../app/store";
 
+// Опечатка. В этом слайсе описываются задачи, а interface называется CategoriesState
+// Много дублирующихся интерфейсов. Лучше вынести его в отдельный файл и импортировать сюда.
 export interface CategoriesState {
   id: string;
   name: string;
@@ -37,6 +40,8 @@ export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
+    // Некорректные названия функций. Мы добавляем/редактируем/обновляем по одной задаче, поэтому лучше использовать в названии слово task в единственном числе. Также стоит писать в названии глаголы в настоящем времени, а не в прошедшем, т.е. конечные названия получаются: addTask, removeTask, updateTask  и т.д.
+    // Отсутствуют типизации action PayloadAction
     tasksAdded: (state, action) => {
       state.push({
         id: uuidv4(),
@@ -61,6 +66,7 @@ export const tasksSlice = createSlice({
       state.splice(rmTaskIndex, 1);
     },
     tasksClearedCategories: (state, action) => {
+    //  необходимо вернуть элемент массива полностью. return task
       state.map((task) => {
         if (task.category === action.payload) task.category = "";
       });

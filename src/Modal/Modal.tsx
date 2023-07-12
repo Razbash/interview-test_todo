@@ -1,9 +1,11 @@
 /* VENDOR */
+// ненужный импорт
 import React from "react";
 
 /* APPLICATION */
 import "./Modal.css";
 
+// Снова дублируется интерфейс
 interface ModalProps {
   item?: {
     id: string;

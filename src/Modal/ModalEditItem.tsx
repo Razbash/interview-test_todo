@@ -13,6 +13,7 @@ import { ModalFooter } from "./ModalFooter";
 import { tasksUpdated } from "../features/tasksSlice";
 import { categoriesUpdated } from "../features/categoriesSlice";
 
+// Снова дублируется интерфейс. Лучше Импортировать сюда уже готовый и при необходимости расширить его.
 interface ModalEditItemProps {
   item: {
     id: string;
@@ -29,7 +30,9 @@ export const ModalEditItem: React.FC<ModalEditItemProps> = ({
   active,
   setActive,
 }) => {
+  // Тут нужно использовать useAppDispatch
   const dispatch = useDispatch(),
+  // Плохая практика брать тут роут и в зависимости от него делать условный рендеринг. Лучше получить в пропсах сразу информацию о том какие данные мы выводим.
     { pathname } = useLocation(),
     isCategories = pathname.includes("categories"),
     [name, setName] = useState(item.name),
@@ -62,6 +65,8 @@ export const ModalEditItem: React.FC<ModalEditItemProps> = ({
         setActive={setActive}
         submitBtnText="Сохранить"
         size="large"
+        // Это лучше вынести в функцию. Хорошая практика разделять верстку от функций.
+        // Баг: Отсутствует проверка на обязательные поля. Если при редактировании задачи/категории ввести пустое значение, то оно применится
         onSubmit={() => {
           dispatch(
             isCategories
