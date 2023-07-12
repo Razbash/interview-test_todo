@@ -26,6 +26,7 @@ export const ModalRemoveItem: React.FC<ModalRemoveItemProps> = ({
   active,
   setActive,
 }) => {
+  // Тут нужно использовать useAppDispatch
   const dispatch = useDispatch(),
     { pathname } = useLocation(),
     isCategories = pathname.includes("categories"),
